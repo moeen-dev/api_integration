@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 class ProductController extends Controller
 {
 
-    protected $baseUrl = "https://api.escuelajs.co/api/v1/products";
+    protected $baseUrl = "https://dummyjson.com/products";
     /**
      * Display a listing of the resource.
      */
@@ -16,7 +16,7 @@ class ProductController extends Controller
     {
         $response = Http::get($this->baseUrl);
         // dd($response->body());
-        $products = $response->json();
+        $products = $response->json()['products'];
 
         return view('welcome', compact('products'));
     }
