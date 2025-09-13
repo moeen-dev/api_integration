@@ -7,12 +7,18 @@ use Illuminate\Support\Facades\Http;
 
 class ProductController extends Controller
 {
+
+    protected $baseUrl = "https://api.escuelajs.co/api/v1/products";
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $response = Http::get($this->baseUrl);
+        // dd($response->body());
+        $products = $response->json();
+
+        return view('welcome', compact('products'));
     }
 
     /**
