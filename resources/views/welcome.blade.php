@@ -1,99 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Practice</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
-</head>
-
-<body>
-
-    <header>
-        <div class="container p-3">
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Attachment Class 03</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Products</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    More
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Contact</a></li>
-                                    <li><a class="dropdown-item" href="#">About</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">FAQ's</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <form class="d-flex" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Type Keyword"
-                                aria-label="Search" />
-                            <button class="btn btn-outline-success" type="submit">Search</button>
-                        </form>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
-
+@extends('app')
+@section('content')
     <div class="container mt-4">
         <div class="heading text-center">
             <h2>Our Products</h2>
         </div>
         <div class="row">
-            @foreach ($products as $product)
-                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 p-3 bg-light">
-                    <div class="card" style="width: 18rem;">
-                        {{-- <img src="{{ $product['image'][0] ?? 'https://placehold.co/545x621' }}" class="card-img-top"
-                            alt="product.jpg"> --}}
-                        <img src="{{ isset($product['images'][0]) ? $product['images'][0] : 'https://via.placeholder.com/150' }}"
-                            alt="{{ $product['title'] }}" class="card-img-top">
+            @if (isset($products) && count($products) > 0)
+                @foreach ($products as $product)
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 p-3 bg-light">
+                        <div class="card" style="width: 18rem;">
+                            {{-- <img src="{{ $product['image'][0] ?? 'https://placehold.co/545x621' }}" class="card-img-top"
+                        alt="product.jpg"> --}}
+                            <img src="{{ isset($product['images'][0]) ? $product['images'][0] : 'https://via.placeholder.com/150' }}"
+                                alt="{{ $product['title'] }}" class="card-img-top">
 
-                        <div class="card-body">
-                            <h5 class="card-title">{{ \Illuminate\Support\Str::limit($product['title'], 20, '...') }}
-                            </h5>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    {{ \Illuminate\Support\Str::limit($product['title'], 20, '...') }}
+                                </h5>
 
-                            <p> {{ \Illuminate\Support\Str::limit($product['description'], 50, '...') }}</p>
-                            <a href="#" class="btn btn-primary">Learn more</a>
+                                <p> {{ \Illuminate\Support\Str::limit($product['description'], 50, '...') }}</p>
+                                <a href="{{ route('product.show', $product['id']) }}" class="btn btn-primary">Learn more</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            @else
+                <p class="text-danger">No product found!</p>
+            @endif
         </div>
     </div>
-
-    <footer class="bg-dark text-white py-3 mt-5">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center">
-                <p class="mb-0">© 2025 Something. All rights reserved.</p>
-                <p class="mb-0">
-                    Developed by
-                    <a href="#" class="text-info fw-bold text-decoration-none">Moeen</a>
-                </p>
-            </div>
-        </div>
-    </footer>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+@endsection

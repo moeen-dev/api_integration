@@ -42,7 +42,15 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $response = Http::get("{$this->baseUrl}/{$id}");
+
+        if ($response->successful()) {
+            $product = $response->json();
+
+            // dd($product);
+
+            return view('product', compact('product'));
+        }
     }
 
     /**
